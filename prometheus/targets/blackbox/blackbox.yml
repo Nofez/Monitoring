@@ -1,0 +1,5 @@
+- targets:
+    - "mylabkool.pp.ua"
+  labels:
+    env: "prod"
+    service: "blackbox"

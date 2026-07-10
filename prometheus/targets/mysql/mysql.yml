@@ -1,0 +1,6 @@
+- targets:
+    - "mysqld-exporter:9104"
+  labels:
+    env: "prod"
+    service: "mysql"
+    db_instance: "mariadb"
