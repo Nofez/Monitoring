@@ -23,6 +23,7 @@ services:
     networks:
       - monitoring
       - grafana_prometheus
+      - vm_network
 
   alertmanager:
     image: prom/alertmanager:v0.27.0
@@ -82,6 +83,10 @@ networks:
   grafana_prometheus:
     name: grafana_prometheus
     driver: bridge
+
+  vm_network:
+    name: vm_network
+    external: true
 
 volumes:
   prometheus_data:
