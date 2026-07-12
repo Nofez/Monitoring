@@ -73,6 +73,7 @@ services:
 
 networks:
   monitoring:
+    name: monitoring
     driver: bridge
 
 volumes:
