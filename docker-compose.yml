@@ -55,14 +55,14 @@ services:
     networks:
       - monitoring
 
-  blackbox-exporter:
+  blackbox_exporter:
     image: prom/blackbox-exporter:v0.25.0
     container_name: blackbox-exporter
     restart: always
     networks:
       - monitoring
 
-  mysqld-exporter:
+  mysql_exporter:
     image: prom/mysqld-exporter:v0.15.1
     container_name: mysqld-exporter
     restart: always
