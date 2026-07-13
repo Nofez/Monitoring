@@ -1,5 +1,5 @@
 - targets:
-    - "node_exporter:9100"
+    - "node-exporter:9100"
   labels:
     env: "prod"
-    service: "node_exporter"
+    service: "node-exporter"
