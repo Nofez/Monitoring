@@ -16,7 +16,7 @@ groups:
         for: 5m
         labels:
           severity: critical
-          service: node-exporter
+          service: node_exporter
         annotations:
           summary: "Критическое использование памяти на {{ $labels.instance }}"
 
@@ -25,6 +25,6 @@ groups:
         for: 10m
         labels:
           severity: warning
-          service: node-exporter
+          service: node_exporter
         annotations:
           summary: "Мало места на диске {{ $labels.mountpoint }} ({{ $labels.instance }})"
