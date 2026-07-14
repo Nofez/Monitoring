@@ -59,7 +59,7 @@ services:
       - "9100:9100"
     networks:
       - monitoring
-      - monitor_app
+
 
   blackbox_exporter:
     image: prom/blackbox-exporter:v0.25.0
@@ -67,7 +67,7 @@ services:
     restart: always
     networks:
       - monitoring
-      - monitor_app
+
 
   mysql_exporter:
     image: prom/mysqld-exporter:v0.15.1
