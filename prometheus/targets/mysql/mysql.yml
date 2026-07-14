@@ -1,5 +1,5 @@
 - targets:
-    - "mysql:9104"
+    - "mysql_exporter:9104"
   labels:
     env: "prod"
     service: "mysql"
