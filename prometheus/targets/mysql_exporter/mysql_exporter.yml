@@ -2,5 +2,5 @@
     - "mysql_exporter:9104"
   labels:
     env: "prod"
-    service: "mysql"
+    service: "mysql_exporter"
     db_instance: "mariadb"

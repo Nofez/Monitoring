@@ -18,7 +18,7 @@ remote_write:
 
 rule_files:
   - "/etc/prometheus/rules/node_exporter/node_exporter.yml"
-  - "/etc/prometheus/rules/mysql/mysql_exporter.yml"
+  - "/etc/prometheus/rules/mysql_exporter/mysql_exporter.yml"
   - "/etc/prometheus/rules/blackbox/blackbox.yml"
 
 scrape_configs:
@@ -35,7 +35,7 @@ scrape_configs:
   - job_name: "mysql_exporter"
     file_sd_configs:
       - files:
-          - "/etc/prometheus/targets/mysql/mysql_exporter.yml"
+          - "/etc/prometheus/targets/mysql_exporter/mysql_exporter.yml"
         refresh_interval: 30s
 
   - job_name: "blackbox"
