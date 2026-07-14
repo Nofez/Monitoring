@@ -73,8 +73,10 @@ services:
     image: prom/mysqld-exporter:v0.15.1
     container_name: mysqld-exporter
     restart: always
-    env_file:
-      - .env
+    volumes:
+      - ./exporters/.my.cnf:/.my.cnf:ro
+    command:
+      - "--config.my-cnf=/.my.cnf"
     networks:
       - monitoring
       - monitor_app
