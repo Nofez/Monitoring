@@ -1,12 +1,12 @@
 groups:
-  - name: mysql
+  - name: mysql_exporter
     rules:
       - alert: MySQLDown
         expr: mysql_up == 0
         for: 1m
         labels:
           severity: critical
-          service: mysql
+          service: mysql_exporter
         annotations:
           summary: "MySQL недоступен на {{ $labels.instance }}"
 
@@ -15,6 +15,6 @@ groups:
         for: 5m
         labels:
           severity: warning
-          service: mysql
+          service: mysql_exporter
         annotations:
           summary: "Много подключений к MySQL {{ $labels.instance }}"
