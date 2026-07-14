@@ -1,12 +1,12 @@
 groups:
-  - name: node-exporter
+  - name: node_exporter
     rules:
       - alert: HighCPULoad
         expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
         for: 5m
         labels:
           severity: warning
-          service: node-exporter
+          service: node_exporter
         annotations:
           summary: "Высокая загрузка CPU на {{ $labels.instance }}"
           description: "CPU load {{ $value | printf \"%.2f\" }}% за последние 5 минут"
