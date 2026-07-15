@@ -2,10 +2,6 @@ version: '3.8'
 
 services:
   prometheus:
-    depends_on:
-      - node_exporter
-      - mysql_exporter
-      - blackbox_exporter
     image: prom/prometheus:main-distroless
     container_name: prometheus
     volumes:
@@ -20,6 +16,12 @@ services:
       - "--web.enable-lifecycle"
     ports:
       - "9090:9090"
+    healthcheck:
+      test: [ "CMD", "wget", "http://localhost:9090" ]
+      interval: 10s
+      timeout: 15s
+      retries: 10
+      start_period: 40s
     networks:
       - monitoring
       - grafana_prometheus
