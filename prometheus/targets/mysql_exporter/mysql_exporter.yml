@@ -3,4 +3,4 @@
   labels:
     env: "prod"
     service: "mysql_exporter"
-    db_instance: "mariadb"
+    db_instance: "$DB"
