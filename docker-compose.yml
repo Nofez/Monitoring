@@ -2,12 +2,12 @@ version: '3.8'
 
 services:
   prometheus:
-    image: prom/prometheus:v3.4.1
+    image: $PROMETHEUS_IMAGE
     container_name: prometheus
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - ./prometheus/targets:/etc/prometheus/targets:ro
-      - ./prometheus/rules:/etc/prometheus/rules:ro
+      - $PROMETHEUS_YML:/etc/prometheus/prometheus.yml:ro
+      - $PROMETHEUS_TARGET:/etc/prometheus/targets:ro
+      - $PROMETHEUS_RULE:/etc/prometheus/rules:ro
       - prometheus_data:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
@@ -15,7 +15,7 @@ services:
       - "--storage.tsdb.retention.time=15d"
       - "--web.enable-lifecycle"
     ports:
-      - "9090:9090"
+      - "$PROMETHEUS_PORT:9090"
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:9090/-/healthy || exit 1"]
       interval: 10s
@@ -29,24 +29,22 @@ services:
       - monitor_app
 
   alertmanager:
-    image: prom/alertmanager:v0.27.0
+    image: $ALERT_IMAGE
     container_name: alertmanager
     restart: always
     volumes:
-      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - $ALERT_YML:/etc/alertmanager/alertmanager.yml:ro
       - alertmanager_data:/alertmanager
-    env_file:
-      - .env
     command:
       - "--config.file=/etc/alertmanager/alertmanager.yml"
       - "--storage.path=/alertmanager"
     ports:
-      - "9093:9093"
+      - "$ALERT_PORT:9093"
     networks:
       - monitoring
 
   node_exporter:
-    image: prom/node-exporter:v1.8.1
+    image: $NODA_IMAGE
     container_name: node_exporter
     restart: always
     volumes:
@@ -58,13 +56,13 @@ services:
       - "--path.sysfs=/host/sys"
       - "--path.rootfs=/rootfs"
     ports:
-      - "9100:9100"
+      - "$NODA_PORT:9100"
     networks:
       - monitoring
 
 
   blackbox_exporter:
-    image: prom/blackbox-exporter:v0.25.0
+    image: $BLACKBOX_IMAGE
     container_name: blackbox-exporter
     restart: always
     networks:
@@ -72,11 +70,11 @@ services:
 
 
   mysql_exporter:
-    image: prom/mysqld-exporter:v0.15.1
+    image: $MYSQL_IMAGE
     container_name: mysqld-exporter
     restart: always
     volumes:
-      - ./exporters/.my.cnf:/.my.cnf:ro
+      - $MYSQL_NDWORK:/.my.cnf:ro
     command:
       - "--config.my-cnf=/.my.cnf"
     networks:
