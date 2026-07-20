@@ -17,9 +17,9 @@ remote_write:
       capacity: 20000
 
 rule_files:
-  - "/etc/prometheus/rules/node_exporter/node_exporter.yml"
-  - "/etc/prometheus/targets/mysql_exporter/mysql_exporter.yml"
-  - "/etc/prometheus/targets/blackbox/blackbox.yml"
+  - "$NODA_PATH_RULES"
+  - "$MYSQL_PATH_RULES"
+  - "$BLACKBOX_PATH_RULES"
 
 scrape_configs:
   - job_name: "prometheus"
@@ -29,13 +29,13 @@ scrape_configs:
   - job_name: "node_exporter"
     file_sd_configs:
       - files:
-          - "/etc/prometheus/rules/node_exporter/node_exporter.yml"
+          - "$NODA_PATH_TARGET"
         refresh_interval: 30s
 
   - job_name: "mysql_exporter"
     file_sd_configs:
       - files:
-          - "/etc/prometheus/targets/mysql_exporter/mysql_exporter.yml"
+          - "$MYSQL_PATH_TARGET"
         refresh_interval: 30s
 
   - job_name: "blackbox"
@@ -45,7 +45,7 @@ scrape_configs:
     scrape_interval: 30s
     file_sd_configs:
       - files:
-          - "/etc/prometheus/targets/blackbox/blackbox.yml"
+          - "$BLACKBOX_PATH_TARGET"
         refresh_interval: 30s
     relabel_configs:
       - source_labels: [__address__]
