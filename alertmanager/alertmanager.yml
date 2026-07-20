@@ -17,13 +17,13 @@ receivers:
   - name: "default"
     telegram_configs:
       - bot_token: "$TOKEN"
-        chat_id: $CHAT_ID
+        chat_id: -5421897133
         parse_mode: "HTML"
 
   - name: "critical-alerts"
     telegram_configs:
       - bot_token: "$TOKEN"
-        chat_id: $CHAT_ID
+        chat_id: -5421897133
         parse_mode: "HTML"
 
 
