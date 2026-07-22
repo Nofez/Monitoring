@@ -2,19 +2,15 @@ version: '3.8'
 
 services:
   prometheus:
-    image: $PROMETHEUS_IMAGE
+    build:
+      context: ./DockerFile
+      dockerfile: DockerFile
     container_name: prometheus
     volumes:
       - $PROMETHEUS_YML:/etc/prometheus/prometheus.yml.template:ro
       - $PROMETHEUS_TARGET:/etc/prometheus/targets:ro
       - $PROMETHEUS_RULE:/etc/prometheus/rules:ro
       - prometheus_data:/prometheus
-    command:
-      - envsubst < /etc/prometheus/prometheus.yml.template > /etc/prometheus/prometheus.yml &&
-        /bin/prometheus --config.file=/etc/prometheus/prometheus.yml
-        --storage.tsdb.path=/prometheus
-        --storage.tsdb.retention.time=15d
-        --web.enable-lifecycle
     environment:
       - NODA_PATH_TARGET=${NODA_PATH_TARGET}
       - MYSQL_PATH_TARGET=${MYSQL_PATH_TARGET}
