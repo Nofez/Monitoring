@@ -1,17 +1,16 @@
 # Dockerfile
-# ---- Stage 1: получаем статический бинарник envsubst ----
-FROM golang:1.22-alpine AS envsubst-builder
+# ---- Stage 1: скачиваем готовый статический бинарник envsubst ----
+FROM alpine:3.20 AS envsubst-builder
 
-RUN apk add --no-cache git \
-    && go install github.com/a8m/envsubst/cmd/envsubst@latest
+RUN apk add --no-cache curl \
+    && curl -L -o /usr/local/bin/envsubst \
+       "https://github.com/a8m/envsubst/releases/download/v1.4.3/envsubst-Linux-x86_64" \
+    && chmod +x /usr/local/bin/envsubst
 
 # ---- Stage 2: финальный образ на базе prometheus ----
 FROM prom/prometheus:v3.4.1
 
-# Копируем статический бинарник envsubst из builder-стадии
-COPY --from=envsubst-builder /go/bin/envsubst /bin/envsubst
-
-# Копируем entrypoint-скрипт
+COPY --from=envsubst-builder /usr/local/bin/envsubst /bin/envsubst
 COPY entrypoint.sh /entrypoint.sh
 
 USER root
