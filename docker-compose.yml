@@ -5,15 +5,23 @@ services:
     image: $PROMETHEUS_IMAGE
     container_name: prometheus
     volumes:
-      - $PROMETHEUS_YML:/etc/prometheus/prometheus.yml:ro
+      - $PROMETHEUS_YML:/etc/prometheus/prometheus.yml.template:ro
       - $PROMETHEUS_TARGET:/etc/prometheus/targets:ro
       - $PROMETHEUS_RULE:/etc/prometheus/rules:ro
       - prometheus_data:/prometheus
     command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
-      - "--storage.tsdb.path=/prometheus"
-      - "--storage.tsdb.retention.time=15d"
-      - "--web.enable-lifecycle"
+      - envsubst < /etc/prometheus/prometheus.yml.template > /etc/prometheus/prometheus.yml &&
+        /bin/prometheus --config.file=/etc/prometheus/prometheus.yml
+        --storage.tsdb.path=/prometheus
+        --storage.tsdb.retention.time=15d
+        --web.enable-lifecycle
+    environment:
+      - NODA_PATH_TARGET=${NODA_PATH_TARGET}
+      - MYSQL_PATH_TARGET=${MYSQL_PATH_TARGET}
+      - BLACKBOX_PATH_TARGET=${BLACKBOX_PATH_TARGET}
+      - NODA_PATH_RULES=${NODA_PATH_RULES}
+      - MYSQL_PATH_RULES=${MYSQL_PATH_RULES}
+      - BLACKBOX_PATH_RULES=${BLACKBOX_PATH_RULES}
     ports:
       - "$PROMETHEUS_PORT:9090"
     healthcheck:
