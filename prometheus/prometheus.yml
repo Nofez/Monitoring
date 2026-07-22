@@ -17,7 +17,7 @@ remote_write:
       capacity: 20000
 
 rule_files:
-  - "/etc/prometheus/rules/node_exporter/node_exporter.yml"
+  - "$NODA_PATH_RULES"
   - "/etc/prometheus/rules/mysql_exporter/mysql_exporter.yml"
   - "/etc/prometheus/rules/blackbox/blackbox.yml"
 
