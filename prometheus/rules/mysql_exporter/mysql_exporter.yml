@@ -9,12 +9,3 @@ groups:
           service: mysql_exporter
         annotations:
           summary: "MySQL недоступен на {{ $labels.instance }}"
-
-      - alert: MySQLTooManyConnections
-        expr: mysql_global_status_threads_connected / mysql_global_variables_max_connections * 100 > 80
-        for: 5m
-        labels:
-          severity: warning
-          service: mysql_exporter
-        annotations:
-          summary: "Много подключений к MySQL {{ $labels.instance }}"
