@@ -10,12 +10,3 @@ groups:
         annotations:
           summary: "Сайт недоступен: {{ $labels.instance }}"
           description: "Blackbox probe fails для {{ $labels.instance }} более 2 минут"
-
-      - alert: BlackboxHighLatency
-        expr: probe_duration_seconds > 2
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "Долгий ответ от {{ $labels.instance }}"
-          description: "Проба {{ $labels.instance }} отвечает дольше 2 секунд уже 5 минут (текущее значение: {{ $value }}s)."
