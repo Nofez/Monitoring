@@ -45,7 +45,8 @@ services:
 
   alertmanager:
     depends_on:
-      - alertmanager-config
+      alertmanager-config:
+        condition: service_completed_successfully
     image: $ALERT_IMAGE
     container_name: alertmanager
     restart: always
